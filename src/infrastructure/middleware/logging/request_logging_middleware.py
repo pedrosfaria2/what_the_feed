@@ -62,7 +62,9 @@ class RequestLoggingMiddleware(BaseCustomMiddleware):
             return await call_next(request)
 
         self.duration_ms = None
-        timing_ctx = self.timing_context() if self.include_timing else nullcontext()
+        timing_ctx = (
+            self.timing_context() if self.include_timing else nullcontext()
+        )
 
         log_data, request_id = await self.request_logger.build_log(request)
 
@@ -71,10 +73,14 @@ class RequestLoggingMiddleware(BaseCustomMiddleware):
                 response = await call_next(request)
                 status_code = response.status_code
             except Exception as exc:
-                logger.error(f"Request {request_id}: Unhandled exception - {str(exc)}")
+                logger.error(
+                    f"Request {request_id}: Unhandled exception - {str(exc)}"
+                )
                 raise
             finally:
-                log_data.update(self.response_logger.build_log(response, status_code))
+                log_data.update(
+                    self.response_logger.build_log(response, status_code)
+                )
                 if self.include_timing:
                     log_data["duration_ms"] = self.duration_ms
 

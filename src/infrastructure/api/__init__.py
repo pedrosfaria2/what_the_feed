@@ -52,6 +52,8 @@ class APIBuilder:
             description="What The Feed?!?",
             version=settings.APP_VERSION,
             docs_url="/docs" if settings.ENVIRONMENT != "production" else None,
-            redoc_url="/redoc" if settings.ENVIRONMENT != "production" else None,
+            redoc_url=(
+                "/redoc" if settings.ENVIRONMENT != "production" else None
+            ),
         )
         return cls(app).app
