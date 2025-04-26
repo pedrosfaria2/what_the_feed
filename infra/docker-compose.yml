@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - ../../.env
+    ports:
+      - '8000:8000'
+    volumes:
+      - ../../:/app
+    working_dir: /app
+    command: ['python', 'src/main.py']
