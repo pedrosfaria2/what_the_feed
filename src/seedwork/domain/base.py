@@ -1,0 +1,2 @@
+class GenericDomain:
+    pass
