@@ -19,9 +19,7 @@ class ResponseLogger:
         self.sensitive_headers = sensitive_headers or DEFAULT_SENSITIVE_HEADERS
         self.mask_sensitive_data = mask_sensitive_data
 
-    def build_log(
-        self, response: Response, status_code: int
-    ) -> Dict[str, Any]:
+    def build_log(self, response: Response, status_code: int) -> Dict[str, Any]:
         log_data = {
             "status_code": status_code,
             "status_phrase": HTTPStatus(status_code).phrase,

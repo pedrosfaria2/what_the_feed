@@ -27,15 +27,7 @@ class RequestLoggingMiddleware(BaseCustomMiddleware):
         mask_sensitive_data: bool = True,
         include_timing: bool = True,
     ):
-        super().__init__(
-            app,
-            exclude_paths=exclude_paths,
-            exclude_methods=exclude_methods,
-            log_request_body=log_request_body,
-            log_response_body=log_response_body,
-            mask_sensitive_data=mask_sensitive_data,
-            include_timing=include_timing,
-        )
+        super().__init__(app)
         self.duration_ms = None
         self.exclude_paths = exclude_paths or DEFAULT_EXCLUDED_PATHS
         self.exclude_methods = exclude_methods or DEFAULT_EXCLUDED_METHODS
@@ -70,9 +62,7 @@ class RequestLoggingMiddleware(BaseCustomMiddleware):
             return await call_next(request)
 
         self.duration_ms = None
-        timing_ctx = (
-            self.timing_context() if self.include_timing else nullcontext()
-        )
+        timing_ctx = self.timing_context() if self.include_timing else nullcontext()
 
         log_data, request_id = await self.request_logger.build_log(request)
 
@@ -81,14 +71,10 @@ class RequestLoggingMiddleware(BaseCustomMiddleware):
                 response = await call_next(request)
                 status_code = response.status_code
             except Exception as exc:
-                logger.error(
-                    f"Request {request_id}: Unhandled exception - {str(exc)}"
-                )
+                logger.error(f"Request {request_id}: Unhandled exception - {str(exc)}")
                 raise
             finally:
-                log_data.update(
-                    self.response_logger.build_log(response, status_code)
-                )
+                log_data.update(self.response_logger.build_log(response, status_code))
                 if self.include_timing:
                     log_data["duration_ms"] = self.duration_ms
 

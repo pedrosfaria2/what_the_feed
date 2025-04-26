@@ -31,9 +31,7 @@ def mask_sensitive_data(data: Any, sensitive_headers: set[str]) -> Any:
         try:
             json_data = json.loads(data)
             if isinstance(json_data, dict):
-                return json.dumps(
-                    mask_sensitive_data(json_data, sensitive_headers)
-                )
+                return json.dumps(mask_sensitive_data(json_data, sensitive_headers))
         except JSONDecodeError:
             pass
     return data

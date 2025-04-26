@@ -21,12 +21,7 @@ class RateLimitingMiddleware(BaseCustomMiddleware):
         window_seconds: int = 60,
         exclude_paths: set[str] = None,
     ):
-        super().__init__(
-            app,
-            requests_limit=requests_limit,
-            window_seconds=window_seconds,
-            exclude_paths=exclude_paths,
-        )
+        super().__init__(app)
         self.store = InMemoryStore()
         self.requests_limit = requests_limit
         self.window_seconds = window_seconds

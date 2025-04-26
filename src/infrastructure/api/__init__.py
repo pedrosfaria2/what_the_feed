@@ -17,15 +17,16 @@ class APIBuilder:
         self._configure_routes()
 
     def _configure_middlewares(self):
+
         self.app.add_middleware(
-            RateLimitingMiddleware,  # type: ignore
+            RateLimitingMiddleware,
             requests_limit=100,
             window_seconds=60,
             exclude_paths={"/health", "/metrics"},
         )
 
         self.app.add_middleware(
-            RequestLoggingMiddleware,  # type: ignore
+            RequestLoggingMiddleware,
             exclude_paths={"/health"},
             log_request_body=True,
             log_response_body=True,
@@ -34,7 +35,7 @@ class APIBuilder:
         )
 
         self.app.add_middleware(
-            CORSMiddleware,  # type: ignore
+            CORSMiddleware,
             allow_origins=["*"],
             allow_credentials=True,
             allow_methods=["*"],
@@ -48,11 +49,9 @@ class APIBuilder:
     def create(cls) -> FastAPI:
         app = FastAPI(
             title=settings.APP_NAME,
-            description="What The Feed!?!",
+            description="What The Feed?!?",
             version=settings.APP_VERSION,
             docs_url="/docs" if settings.ENVIRONMENT != "production" else None,
-            redoc_url=(
-                "/redoc" if settings.ENVIRONMENT != "production" else None
-            ),
+            redoc_url="/redoc" if settings.ENVIRONMENT != "production" else None,
         )
         return cls(app).app
