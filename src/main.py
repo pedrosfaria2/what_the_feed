@@ -1,6 +1,8 @@
-def main():
-    print("Hello from what-the-feed!")
+from src.infrastructure.api import APIBuilder
 
+app = APIBuilder.create()
 
 if __name__ == "__main__":
-    main()
+    import uvicorn
+
+    uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
