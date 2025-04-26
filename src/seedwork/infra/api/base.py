@@ -67,7 +67,9 @@ class GetApi:
             return output
         except Exception as exp:
             detail = f"Get API error {str(exp)}"
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=detail
+            )
 
     async def get_one_route(
         self,
@@ -85,7 +87,9 @@ class GetApi:
             return output
         except Exception as exp:
             detail = f"Get API error {str(exp)}"
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=detail
+            )
 
 
 class PostApi:
@@ -105,7 +109,9 @@ class PostApi:
             return output.model_dump()
         except Exception as exp:
             detail = f"Post API error {str(exp)}"
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=detail
+            )
 
 
 class PutApi:
@@ -125,7 +131,9 @@ class PutApi:
             return output.model_dump()
         except Exception as exp:
             detail = f"Post API error {str(exp)}"
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=detail
+            )
 
 
 class DeleteApi:
@@ -145,4 +153,6 @@ class DeleteApi:
             return output.model_dump()
         except Exception as exp:
             detail = f"Post API error {str(exp)}"
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, detail=detail
+            )

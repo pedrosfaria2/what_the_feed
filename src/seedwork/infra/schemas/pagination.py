@@ -8,7 +8,9 @@ T = TypeVar("T", bound=BaseModel)
 class PageMeta(PydanticModel):
     page: int = Field(description="Página atual")
     page_size: int = Field(description="Items solicitados por página")
-    total_items: int = Field(description="Total de itens que podem ser consultados")
+    total_items: int = Field(
+        description="Total de itens que podem ser consultados"
+    )
     total_pages: int = Field(
         description="Total de páginas gerado pelo total de itens dividido pelo itens solicitados"
     )
@@ -19,7 +21,9 @@ class PageLink(PydanticModel):
     prev_page: Optional[str] = Field(
         description="Previous page, if any, that was queried"
     )
-    actual_page: str = Field(description="The actual page url that was queried")
+    actual_page: str = Field(
+        description="The actual page url that was queried"
+    )
 
 
 class PageResult(PydanticModel, Generic[T]):

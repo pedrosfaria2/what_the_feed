@@ -52,7 +52,9 @@ class AbstractSetup:
                 seen_code.add(missing.get("name"))
                 result.append(missing)
             else:
-                logger.debug(f'ignored item {missing.get("name")} (duplicated)')
+                logger.debug(
+                    f'ignored item {missing.get("name")} (duplicated)'
+                )
         self._base_content = result
         logger.info(
             f"Registros para adicionar em {self._setup_name}: {len(self._base_content)}"

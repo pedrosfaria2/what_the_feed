@@ -8,7 +8,11 @@ from loguru import logger
 from sqlalchemy import desc
 from src.seedwork.infra.utils.filter import Filtering
 from src.seedwork.infra.utils.model import ModelUtils
-from src.seedwork.infra.schemas.pagination import PageResult, PageLink, PageMeta
+from src.seedwork.infra.schemas.pagination import (
+    PageResult,
+    PageLink,
+    PageMeta,
+)
 
 
 class GenericRepository:
@@ -36,7 +40,9 @@ class GenericRepository:
             "primary_key_attr": getattr(
                 self.model, f"{self.model.__tablename__}_id", "id"
             ),
-            "primary_key_name": self.model.__table__.primary_key.columns.keys()[0],
+            "primary_key_name": self.model.__table__.primary_key.columns.keys()[
+                0
+            ],
             "columns": self.model.__table__.columns.keys(),
             "table": self.model.__tablename__,
         }
@@ -137,7 +143,9 @@ class PutRepository(GenericRepository):
     async def case(self) -> BaseModel:
         put = self.session.query(self.model).filter(
             self.metadata.get("primary_key_attr")
-            == getattr(self.input_schema, self.metadata.get("primary_key_name"))
+            == getattr(
+                self.input_schema, self.metadata.get("primary_key_name")
+            )
         )
         to_update = self.input_schema.model_dump(
             exclude_unset=True,
@@ -152,7 +160,9 @@ class PutRepository(GenericRepository):
         )
         result = self.session.query(self.model).filter(
             self.metadata.get("primary_key_attr")
-            == getattr(self.input_schema, self.metadata.get("primary_key_name"))
+            == getattr(
+                self.input_schema, self.metadata.get("primary_key_name")
+            )
         )
         return self.output_schema.model_validate(result.one_or_none())
 
@@ -168,7 +178,9 @@ class DeleteRepository(GenericRepository):
         super().__init__(model, input_schema, output_schema, session)
 
     async def case(self) -> BaseModel:
-        delete_id = getattr(self.input_schema, self.metadata.get("primary_key_name"))
+        delete_id = getattr(
+            self.input_schema, self.metadata.get("primary_key_name")
+        )
         delete = (
             self.session.query(self.model)
             .filter(self.metadata.get("primary_key_attr") == delete_id)
@@ -186,6 +198,9 @@ class DeleteRepository(GenericRepository):
         return self.output_schema(
             **{
                 "status": "deleted",
-                "metadata": {"tablename": self.metadata.get("table"), "id": delete_id},
+                "metadata": {
+                    "tablename": self.metadata.get("table"),
+                    "id": delete_id,
+                },
             }
         )

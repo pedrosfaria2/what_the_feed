@@ -39,16 +39,22 @@ class Filtering:
 
         for i, (key, value) in enumerate(self.input_dict.items()):
             param_key = f"value_{i}"
-            condition, param_value = self._get_condition_for_type(key, value, param_key)
+            condition, param_value = self._get_condition_for_type(
+                key, value, param_key
+            )
             if condition:
                 filter_conditions.append(condition)
                 values[param_key] = param_value
 
         # Join conditions into a filter string
-        filter_str = " AND ".join(filter_conditions) if filter_conditions else ""
+        filter_str = (
+            " AND ".join(filter_conditions) if filter_conditions else ""
+        )
         self.filters = {"filter": filter_str, "values": values}
 
-    def _get_condition_for_type(self, key: str, value, param_key: str) -> tuple:
+    def _get_condition_for_type(
+        self, key: str, value, param_key: str
+    ) -> tuple:
         """
         Returns the SQL condition and parameter value based on the type of the value.
         This function can be easily extended for more types.
@@ -66,4 +72,6 @@ class Filtering:
 
         else:
             # Unsupported data type
-            raise ValueError(f"Unsupported data type for key: {key}, value: {value}")
+            raise ValueError(
+                f"Unsupported data type for key: {key}, value: {value}"
+            )

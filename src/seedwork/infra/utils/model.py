@@ -60,7 +60,9 @@ class ModelUtils:
     def check_model_types(self, kwargs: dict) -> None:
         "Adicionar um kwarg checker que confere se o tipo encaminhado atende ao critério do modelo para criar exceção do tipo TypeError"
         inspector = inspect(self.model)
-        attr_names = [column_attr.key for column_attr in inspector.mapper.column_attrs]
+        attr_names = [
+            column_attr.key for column_attr in inspector.mapper.column_attrs
+        ]
 
         for key, value in kwargs.items():
             if key in attr_names:
@@ -72,7 +74,9 @@ class ModelUtils:
     def check_model_kwargs(self, kwargs: dict) -> None:
         "Confere se os kwargs utilizados existem no modelo utilizado. Se não retorna erro de atributo"
         inspector = inspect(self.model)
-        attr_names = [column_attr.key for column_attr in inspector.mapper.column_attrs]
+        attr_names = [
+            column_attr.key for column_attr in inspector.mapper.column_attrs
+        ]
         for key in kwargs.keys():
             if key not in attr_names or key == "dt_start" or key == "dt_end":
                 logger.error("Key is not present at the model`s attributes")

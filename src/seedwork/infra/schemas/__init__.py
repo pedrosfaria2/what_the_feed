@@ -15,6 +15,7 @@ from src.seedwork.infra.utils.timezone import tz
 
 class PydanticModel(BaseModel):
     "BaseModel standard for every schema class"
+
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -36,6 +37,7 @@ class UpdatedModel(CreatedModel):
 
 class GetInput(PydanticModel):
     "Base pydantic model for GET"
+
     page: Optional[int] = Field(default=1, gt=0)
     page_size: Optional[int] = Field(default=20, gt=0, le=100)
     _actual_page: Optional[str] = PrivateAttr(default="/")

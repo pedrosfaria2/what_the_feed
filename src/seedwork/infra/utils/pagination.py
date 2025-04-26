@@ -5,7 +5,11 @@ from fastapi import Request
 from loguru import logger
 from pydantic import BaseModel
 
-from src.seedwork.infra.schemas.pagination import PageMeta, PageLink, PageResult
+from src.seedwork.infra.schemas.pagination import (
+    PageMeta,
+    PageLink,
+    PageResult,
+)
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -100,7 +104,9 @@ class Pagination(Generic[T]):
             else:
                 paginated_items = items
 
-        pydantic_items = [schema_class.model_validate(item) for item in paginated_items]
+        pydantic_items = [
+            schema_class.model_validate(item) for item in paginated_items
+        ]
 
         actual_page = str(request.url)
         base_url, _, query_string = actual_page.partition("?")
