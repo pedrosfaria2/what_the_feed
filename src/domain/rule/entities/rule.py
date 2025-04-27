@@ -15,13 +15,13 @@ class Rule(Entity):
         self,
         name: str,
         rule_type: RuleType,
-        id: Optional[str] = None,
+        rule_id: Optional[str] = None,
         description: Optional[str] = None,
         conditions: Optional[List[RuleCondition]] = None,
         transformations: Optional[List[RuleTransformation]] = None,
         priority: int = 0,
     ):
-        super().__init__(id)
+        super().__init__(rule_id)
         self.name = name
         self.rule_type = rule_type
         self.description = description
