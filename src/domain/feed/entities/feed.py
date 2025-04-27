@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional, List
 
-from src.domain.feed.value_objects.feed_status import FeedStatus
+from domain.feed.enums.feed_status import FeedStatus
 from src.domain.feed.value_objects.feed_url import FeedUrl
 from src.seedwork.domain.base import Entity
 from src.domain.feed.entities.feed_item import FeedItem
